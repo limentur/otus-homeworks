@@ -25,3 +25,4 @@ replay_pid*
 /.gradle/
 /.idea/
 /hw01-gradle/build/
+/L03-generics/build/
