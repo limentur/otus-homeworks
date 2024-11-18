@@ -1,39 +1,21 @@
 package homework;
 
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class CustomerService {
 
-    private final Map<Customer, String> customerMap = new HashMap<>();
+    private final NavigableMap<Customer, String> customerMap;
+
+    public CustomerService() {
+        this.customerMap = new TreeMap<>(Comparator.comparingLong(Customer::getScores));
+    }
 
     public Map.Entry<Customer, String> getSmallest() {
-        Map.Entry<Customer, String> min = null;
-        for (Map.Entry<Customer, String> entryMap : customerMap.entrySet()) {
-            if (min == null || min.getKey().getScores() > entryMap.getKey().getScores()) {
-                min = new AbstractMap.SimpleEntry<>(entryMap.getKey(), entryMap.getValue());
-            }
-        }
-
-        assert min != null;
-        return copyOfEntry(min);
+        return copyOfEntry(customerMap.firstEntry());
     }
 
     public Map.Entry<Customer, String> getNext(Customer customer) {
-        Map.Entry<Customer, String> middle = null;
-        for (Map.Entry<Customer, String> entryMap : customerMap.entrySet()) {
-            if (middle == null || (middle.getKey().getScores() < entryMap.getKey().getScores()) && middle.getKey().getScores() < customer.getScores()) {
-                middle = entryMap;
-            }
-        }
-
-        assert middle != null;
-        if (customer.getScores() > middle.getKey().getScores()){
-            return null;
-        }
-
-        return middle;
+        return copyOfEntry(customerMap.higherEntry(customer));
     }
 
     public void add(Customer customer, String data) {
@@ -41,6 +23,7 @@ public class CustomerService {
     }
 
     private Map.Entry<Customer, String> copyOfEntry(Map.Entry<Customer, String> newMap) {
+        if (newMap == null) return null;
         return new Map.Entry<>() {
             @Override
             public Customer getKey() {
@@ -57,5 +40,5 @@ public class CustomerService {
                 return newMap.setValue(value);
             }
         };
-}
+    }
 }

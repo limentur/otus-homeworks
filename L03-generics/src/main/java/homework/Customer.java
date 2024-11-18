@@ -1,7 +1,5 @@
 package homework;
 
-import java.util.Objects;
-
 public class Customer {
     private final long id;
     private String name;
@@ -41,19 +39,13 @@ public class Customer {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o != null && getClass() == o.getClass()) return true;
-
-        Customer customer = (Customer) o;
-
-        if (id != customer.id) return false;
-        if (scores != customer.scores) return false;
-        return Objects.equals(name, customer.name);
+        Customer c = (Customer) o;
+        if (c.getId() == id) return true;
+        return getClass() == o.getClass();
     }
 
     @Override
     public int hashCode() {
-        //        result = 31 * result + (name != null ? name.hashCode() : 0);
-//        result = 31 * result + Long.hashCode(scores);
         return Long.hashCode(id);
     }
 
