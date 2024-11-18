@@ -39,9 +39,10 @@ public class Customer {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+        if (o == null) return false;
+        if (getClass() != o.getClass()) return false;
         Customer c = (Customer) o;
-        if (c.getId() == id) return true;
-        return getClass() == o.getClass();
+        return c.getId() == id;
     }
 
     @Override
