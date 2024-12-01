@@ -6,6 +6,7 @@ import static ru.otus.HelloOtus.hwGuavaCall;
 
 public class App {
     public static void main(String... args) {
+
         System.out.println(hwGuavaCall());
         }
     }
