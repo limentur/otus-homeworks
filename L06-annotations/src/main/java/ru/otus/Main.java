@@ -15,22 +15,24 @@ public class Main {
 
         TestSet thirdSet = new TestSet("thirdSet");
 
-        try {
-            logger.info("------------------");
-            logger.info("FirstSet");
-            logger.info("------------------");
-            TestStarter.parseAndRun(firstSet);
-            logger.info("------------------");
-            logger.info("SecondSet");
-            logger.info("------------------");
-            TestStarter.parseAndRun(secondSet);
-            logger.info("------------------");
-            logger.info("ThirdSet");
-            logger.info("------------------");
-            TestStarter.parseAndRun(thirdSet);
+        TestStarter starter = new TestStarter();
 
-        } catch (InvocationTargetException | IllegalAccessException ignored) {
+        logger.info("------------------");
+        logger.info("FirstSet");
+        logger.info("------------------");
+        starter.parseAndRun(firstSet);
+        logger.info("------------------");
 
-        }
+        logger.info("SecondSet");
+        logger.info("------------------");
+        starter.parseAndRun(secondSet);
+        logger.info("------------------");
+
+        logger.info("ThirdSet");
+        logger.info("------------------");
+        starter.parseAndRun(thirdSet);
+        logger.info("------------------");
+
+        starter.showTestStats();
     }
 }

@@ -37,11 +37,9 @@ public class TestSet {
     }
 
     @Test
-    public void testWithException(){
+    public void testWithException() throws Exception {
         logger.info("lets threwException in {}",stringIdentifier);
-        try {
-            throw new Exception("test shouldn't stop there");
+        throw new Exception();
         }
-        catch (Exception ignored){}
     }
-}
+
