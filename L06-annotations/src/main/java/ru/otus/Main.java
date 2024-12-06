@@ -3,8 +3,6 @@ package ru.otus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
     public static void main(String... args){
@@ -15,24 +13,20 @@ public class Main {
 
         TestSet thirdSet = new TestSet("thirdSet");
 
-        TestStarter starter = new TestStarter();
-
         logger.info("------------------");
         logger.info("FirstSet");
         logger.info("------------------");
-        starter.parseAndRun(firstSet);
+        new TestStarter(firstSet);
         logger.info("------------------");
 
         logger.info("SecondSet");
         logger.info("------------------");
-        starter.parseAndRun(secondSet);
+        new TestStarter(secondSet);
         logger.info("------------------");
 
         logger.info("ThirdSet");
         logger.info("------------------");
-        starter.parseAndRun(thirdSet);
+        new TestStarter(thirdSet);
         logger.info("------------------");
-
-        starter.showTestStats();
     }
 }
