@@ -1,0 +1,21 @@
+Использование Integer
+-Xms256m -Xmx256m spend msec:30363, sec:30
+-Xms512m -Xmx512m spend msec:29536, sec:29
+-Xms1024m -Xmx1024m spend msec:30136, sec:30
+-Xms2048m -Xmx2048m spend msec:25390, sec:25
+-Xms4096m -Xmx4096m spend msec:20757, sec:20
+-Xms8192m -Xmx8192m spend msec:12044, sec:12
+-Xms16384m -Xmx16384m spend msec:10994, sec:10
+-Xms20480m -Xmx20480m spend msec:11480, sec:11
+-Xms30720m -Xmx30720m spend msec:30879, sec:30
+
+Использование int
+-Xms256m -Xmx256m spend msec:5179, sec:5
+-Xms512m -Xmx512m spend msec:4779, sec:4
+-Xms1024m -Xmx1024m spend msec:4033, sec:4 - Оптимальный размер хипа
+-Xms2048m -Xmx2048m spend msec:4070, sec:4
+-Xms4096m -Xmx4096m spend msec:4313, sec:4
+-Xms8192m -Xmx8192m spend msec:4868, sec:4
+-Xms16384m -Xmx16384m spend msec:4882, sec:4
+-Xms20480m -Xmx20480m spend msec:4798, sec:4
+-Xms30720m -Xmx30720m spend msec:4439, sec:4
