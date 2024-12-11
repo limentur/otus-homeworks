@@ -1,6 +1,7 @@
 rootProject.name = "otusJava"
 include("hw01-gradle")
 include("L03-generics")
+include("L08-gc:homework")
 
 
 pluginManagement {
@@ -24,3 +25,4 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
+include("hw4-gc")
