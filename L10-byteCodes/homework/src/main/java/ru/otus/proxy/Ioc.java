@@ -12,7 +12,6 @@ public class Ioc {
 
     private Ioc() {}
 
-    @SuppressWarnings("unchecked")
     public static <T> T createClass(Class<? extends T> clazz) {
         var classInstance = ReflectionHelper.newInstance(clazz);
         var handler = new TestInvocationHandler<>(classInstance);
