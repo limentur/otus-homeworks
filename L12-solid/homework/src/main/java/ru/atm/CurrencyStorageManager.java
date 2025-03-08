@@ -2,12 +2,15 @@ package ru.atm;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class CurrencyStorageManager {
-    public static Map<Currency, TreeMap<Integer,Integer>> currencyStorage = new HashMap<>();
+    public static Map<Currency, AtmCell> currencyStorage = new HashMap<>();
 
-    public static TreeMap<Integer,Integer> getCurrencyStorage(Currency cur){
+    public static AtmCell getCell(Currency cur){
         return currencyStorage.get(cur);
+    }
+
+    public static int getAccountBalance(Currency currency){
+        return currencyStorage.get(currency).countAccountBalance();
     }
 }

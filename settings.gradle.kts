@@ -5,6 +5,7 @@ include("hw4-gc")
 include("L06-annotations")
 include("L08-gc:homework")
 include("L12-solid:homework")
+include("L15-structuralPatterns:homework")
 
 
 

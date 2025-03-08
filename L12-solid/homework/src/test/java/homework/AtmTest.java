@@ -1,0 +1,72 @@
+package homework;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import ru.atm.Atm;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.atm.Currency.EUR;
+import static ru.atm.Currency.RUR;
+import static ru.atm.CurrencyStorageManager.getAccountBalance;
+import static ru.atm.Nominal.FIFTY;
+import static ru.atm.Nominal.ONE_HUNDRED;
+
+public class AtmTest {
+    private static Atm atm;
+
+    @AfterAll
+    public static void shutDown(){
+        atm = null;
+    }
+
+    @Test
+    @DisplayName("Проверить пустую валютную ячейку")
+    public void checkMoneyInEmptyCellTest(){
+        atm = new Atm(List.of(RUR));
+        assertEquals(0,getAccountBalance(RUR));
+    }
+
+    @Test
+    @DisplayName("Внесение средств на счет в одной валюте")
+    public void addMoneyForOneCurToAtmTest(){
+        atm = new Atm(RUR);
+        atm.processAddition(RUR,FIFTY,4);
+        atm.processAddition(RUR,ONE_HUNDRED,2);
+
+        assertEquals(400,getAccountBalance(RUR));
+    }
+
+    @Test
+    @DisplayName("Внесение средств на счет в двух валютах")
+    public void addMoneyForMultipleCurToAtmTest(){
+        atm = new Atm(List.of(RUR,EUR));
+        atm.processAddition(RUR,FIFTY,4);
+        atm.processAddition(RUR,ONE_HUNDRED,2);
+        atm.processAddition(EUR,ONE_HUNDRED,2);
+
+        assertEquals(400,getAccountBalance(RUR));
+        assertEquals(200,getAccountBalance(EUR));
+    }
+
+    @Test
+    @DisplayName("Внесение средств в несуществующую валютную ячейку")
+    public void addMoneyForUnavalibleCurToAtmTest(){
+        atm = new Atm(List.of(RUR));
+        atm.processAddition(EUR,ONE_HUNDRED,2);
+
+        assertEquals(200,getAccountBalance(EUR));
+    }
+
+    @Test
+    @DisplayName("Валидация выдачи валютную ячейку")
+    public void checkWithrawIsValidToAtmTest() throws Exception {
+        atm = new Atm(List.of(EUR));
+        atm.processAddition(EUR,ONE_HUNDRED,1);
+        assertEquals(100,getAccountBalance(EUR));
+        atm.processWithdraw(EUR,1);
+        assertEquals(0,getAccountBalance(EUR));
+    }
+}
