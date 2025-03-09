@@ -6,9 +6,7 @@ plugins {
     idea
     id("fr.brouillard.oss.gradle.jgitver")
     id("io.spring.dependency-management")
-    id("org.springframework.boot") apply false
-    id("com.diffplug.spotless") apply false
-}
+    id("org.springframework.boot") apply false }
 
 idea {
     project {
@@ -39,6 +37,7 @@ allprojects {
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
         dependencies {
+
             imports {
                 mavenBom(BOM_COORDINATES)
                 mavenBom("org.testcontainers:testcontainers-bom:$testcontainersBom")
@@ -83,13 +82,6 @@ subprojects {
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
         options.compilerArgs.addAll(listOf("-Xlint:all,-serial,-processing"))
-    }
-
-    apply<com.diffplug.gradle.spotless.SpotlessPlugin>()
-    configure<com.diffplug.gradle.spotless.SpotlessExtension> {
-        java {
-            palantirJavaFormat("2.39.0")
-        }
     }
 
     plugins.apply(fr.brouillard.oss.gradle.plugins.JGitverPlugin::class.java)
