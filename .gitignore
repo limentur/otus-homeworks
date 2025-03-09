@@ -27,3 +27,4 @@ replay_pid*
 /hw01-gradle/build/
 /L03-generics/build/
 /L10-byteCodes/build/
+/L15-structuralPatterns/build/
