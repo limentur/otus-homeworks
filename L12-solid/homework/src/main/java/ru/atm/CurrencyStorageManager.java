@@ -10,7 +10,7 @@ public class CurrencyStorageManager {
         return currencyStorage.get(cur);
     }
 
-    public static int getAccountBalance(Currency currency){
-        return currencyStorage.get(currency).countAccountBalance();
+    public static int getAccountBalance(Currency currency) {
+            return currencyStorage.get(currency).countAccountBalance();
     }
 }

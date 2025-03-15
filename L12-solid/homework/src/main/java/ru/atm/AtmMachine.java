@@ -5,12 +5,12 @@ import static ru.atm.Currency.RUR;
 import static ru.atm.CurrencyStorageManager.currencyStorage;
 
 public abstract class AtmMachine {
-    protected void moneyAdd(Nominal nominal, Integer count, AtmCell cell){
-        if (cell.getCell().containsKey(nominal.getValue())){
-            cell.getCell().merge(nominal.getValue(),count,Integer::sum);
-        }else {
-            cell.getCell().put(nominal.getValue(),count);
-        }
+    protected void moneyAdd(Nominal nominal, Integer count, AtmCell cell)  {
+            if (cell.getCell().containsKey(nominal.getValue())){
+                cell.getCell().merge(nominal.getValue(),count,Integer::sum);
+            } else {
+                cell.getCell().put(nominal.getValue(),count);
+            }
     }
 
     protected void withdraw(int amount, AtmCell cell) throws Exception {
@@ -22,9 +22,9 @@ public abstract class AtmMachine {
     }
 
     protected void recalkNominals (TreeMap<Integer, Integer> withdrawMap){
-        AtmCell withdrawResult = new AtmCell();
-        withdrawResult.setCell(withdrawMap);
-        currencyStorage.put(RUR, withdrawResult);
+        AtmCell cellValueAfterWithdraw = new AtmCell();
+        cellValueAfterWithdraw.setCell(withdrawMap);
+        currencyStorage.put(RUR, cellValueAfterWithdraw);
     }
 
     protected TreeMap<Integer, Integer> countWithdraw(int amount, AtmCell cell) throws Exception {

@@ -4,6 +4,9 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class AtmCell {
+    public Nominal nominal;
+    public Integer count;
+
     private TreeMap <Integer,Integer> cell;
 
     public AtmCell() {

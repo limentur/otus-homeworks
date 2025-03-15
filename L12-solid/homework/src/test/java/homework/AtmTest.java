@@ -8,6 +8,7 @@ import ru.atm.Atm;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.atm.Currency.EUR;
 import static ru.atm.Currency.RUR;
 import static ru.atm.CurrencyStorageManager.getAccountBalance;
@@ -31,7 +32,7 @@ public class AtmTest {
 
     @Test
     @DisplayName("Внесение средств на счет в одной валюте")
-    public void addMoneyForOneCurToAtmTest(){
+    public void addMoneyForOneCurToAtmTest()  {
         atm = new Atm(RUR);
         atm.processAddition(RUR,FIFTY,4);
         atm.processAddition(RUR,ONE_HUNDRED,2);
@@ -41,7 +42,7 @@ public class AtmTest {
 
     @Test
     @DisplayName("Внесение средств на счет в двух валютах")
-    public void addMoneyForMultipleCurToAtmTest(){
+    public void addMoneyForMultipleCurToAtmTest() {
         atm = new Atm(List.of(RUR,EUR));
         atm.processAddition(RUR,FIFTY,4);
         atm.processAddition(RUR,ONE_HUNDRED,2);
@@ -55,18 +56,30 @@ public class AtmTest {
     @DisplayName("Внесение средств в несуществующую валютную ячейку")
     public void addMoneyForUnavalibleCurToAtmTest(){
         atm = new Atm(List.of(RUR));
-        atm.processAddition(EUR,ONE_HUNDRED,2);
-
-        assertEquals(200,getAccountBalance(EUR));
+        assertThrows(Exception.class,() ->
+                atm.processAddition(EUR,ONE_HUNDRED,2),
+                "Ячейки для данной валюты не существует");
     }
 
     @Test
-    @DisplayName("Валидация выдачи валютную ячейку")
-    public void checkWithrawIsValidToAtmTest() throws Exception {
+    @DisplayName("Валидация выдачи из валютной ячейку")
+    public void checkWithrawIsValidToAtmTest() {
         atm = new Atm(List.of(EUR));
         atm.processAddition(EUR,ONE_HUNDRED,1);
         assertEquals(100,getAccountBalance(EUR));
-        atm.processWithdraw(EUR,1);
-        assertEquals(0,getAccountBalance(EUR));
+        assertThrows(Exception.class,() ->
+                atm.processWithdraw(EUR,1),
+                "Нет необходимых купюр для выдачи");
+
+    }
+
+    @Test
+    @DisplayName("Внесение средств в два банкомата ")
+    public void insertMoneyInTwoAtmsTest() {
+        atm = new Atm(RUR);
+        Atm atm2 = new Atm(RUR);
+        atm.processAddition(RUR,ONE_HUNDRED,1);
+        atm2.processAddition(RUR,ONE_HUNDRED,1);
+        assertEquals(200,getAccountBalance(RUR));
     }
 }

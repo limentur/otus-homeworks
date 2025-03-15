@@ -4,6 +4,7 @@ import java.util.*;
 import static ru.atm.CurrencyStorageManager.getCell;
 
 public class Atm extends AtmMachine{
+    public List<AtmCell> cells;
     public Atm(List<Currency> currencies) {
         new CurrencyCellBuilder(currencies);
     }
@@ -12,7 +13,7 @@ public class Atm extends AtmMachine{
         new CurrencyCellBuilder(List.of(currency));
     }
 
-    public void processAddition(Currency cur, Nominal nominal, Integer count){
+    public void processAddition(Currency cur, Nominal nominal, Integer count) {
         moneyAdd(nominal, count, getCell(cur));
     }
 
