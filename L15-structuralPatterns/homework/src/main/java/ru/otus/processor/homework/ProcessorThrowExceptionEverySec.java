@@ -17,7 +17,7 @@ public class ProcessorThrowExceptionEverySec implements Processor {
             return message;
         }
 
-        private int getCurrentSecond() {
+        public int getCurrentSecond() {
             return LocalDateTime.now().getSecond();
         }
 
