@@ -1,10 +1,27 @@
 package ru.atm;
+import java.util.List;
 import java.util.TreeMap;
 
 import static ru.atm.Currency.RUR;
-import static ru.atm.CurrencyStorageManager.currencyStorage;
+
 
 public abstract class AtmMachine {
+    CurrencyStorageManager currencyStorageManager;
+
+    public int getAccountBalance(Currency currency) {
+        return currencyStorageManager.currencyStorage.get(currency).countAccountBalance();
+    }
+
+    public void currencyCellBuilder(List<Currency> curList) {
+        for (Currency currency : curList){
+            currencyStorageManager.currencyStorage.put(currency,new AtmCell());
+        }
+    }
+
+    public void currencyCellBuilder(Currency currency) {
+        currencyStorageManager.currencyStorage.put(currency,new AtmCell());
+    }
+
     protected void moneyAdd(Nominal nominal, Integer count, AtmCell cell)  {
             if (cell.getCell().containsKey(nominal.getValue())){
                 cell.getCell().merge(nominal.getValue(),count,Integer::sum);
@@ -24,7 +41,7 @@ public abstract class AtmMachine {
     protected void recalkNominals (TreeMap<Integer, Integer> withdrawMap){
         AtmCell cellValueAfterWithdraw = new AtmCell();
         cellValueAfterWithdraw.setCell(withdrawMap);
-        currencyStorage.put(RUR, cellValueAfterWithdraw);
+        currencyStorageManager.currencyStorage.put(RUR, cellValueAfterWithdraw);
     }
 
     protected TreeMap<Integer, Integer> countWithdraw(int amount, AtmCell cell) throws Exception {
@@ -66,4 +83,5 @@ public abstract class AtmMachine {
         }
         return withdrawMap;
     }
+
 }

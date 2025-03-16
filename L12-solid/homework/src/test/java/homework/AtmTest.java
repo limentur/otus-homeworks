@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.atm.Currency.EUR;
 import static ru.atm.Currency.RUR;
-import static ru.atm.CurrencyStorageManager.getAccountBalance;
 import static ru.atm.Nominal.FIFTY;
 import static ru.atm.Nominal.ONE_HUNDRED;
 
@@ -27,7 +26,7 @@ public class AtmTest {
     @DisplayName("Проверить пустую валютную ячейку")
     public void checkMoneyInEmptyCellTest(){
         atm = new Atm(List.of(RUR));
-        assertEquals(0,getAccountBalance(RUR));
+        assertEquals(0,atm.getAccountBalance(RUR));
     }
 
     @Test
@@ -37,7 +36,7 @@ public class AtmTest {
         atm.processAddition(RUR,FIFTY,4);
         atm.processAddition(RUR,ONE_HUNDRED,2);
 
-        assertEquals(400,getAccountBalance(RUR));
+        assertEquals(400,atm.getAccountBalance(RUR));
     }
 
     @Test
@@ -48,8 +47,8 @@ public class AtmTest {
         atm.processAddition(RUR,ONE_HUNDRED,2);
         atm.processAddition(EUR,ONE_HUNDRED,2);
 
-        assertEquals(400,getAccountBalance(RUR));
-        assertEquals(200,getAccountBalance(EUR));
+        assertEquals(400,atm.getAccountBalance(RUR));
+        assertEquals(200,atm.getAccountBalance(EUR));
     }
 
     @Test
@@ -66,7 +65,7 @@ public class AtmTest {
     public void checkWithrawIsValidToAtmTest() {
         atm = new Atm(List.of(EUR));
         atm.processAddition(EUR,ONE_HUNDRED,1);
-        assertEquals(100,getAccountBalance(EUR));
+        assertEquals(100,atm.getAccountBalance(EUR));
         assertThrows(Exception.class,() ->
                 atm.processWithdraw(EUR,1),
                 "Нет необходимых купюр для выдачи");
@@ -78,8 +77,9 @@ public class AtmTest {
     public void insertMoneyInTwoAtmsTest() {
         atm = new Atm(RUR);
         Atm atm2 = new Atm(RUR);
-        atm.processAddition(RUR,ONE_HUNDRED,1);
+        atm.processAddition(RUR,ONE_HUNDRED,2);
         atm2.processAddition(RUR,ONE_HUNDRED,1);
-        assertEquals(200,getAccountBalance(RUR));
+        assertEquals(200,atm.getAccountBalance(RUR));
+        assertEquals(100,atm2.getAccountBalance(RUR));
     }
 }
