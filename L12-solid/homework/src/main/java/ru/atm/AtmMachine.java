@@ -5,7 +5,7 @@ import java.util.TreeMap;
 import static ru.atm.Currency.RUR;
 
 
-public abstract class AtmMachine {
+abstract class AtmMachine {
     CurrencyStorageManager currencyStorageManager;
 
     public int getAccountBalance(Currency currency) {
