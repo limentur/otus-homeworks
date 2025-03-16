@@ -1,6 +1,11 @@
 rootProject.name = "otusJava"
 include("hw01-gradle")
 include("L03-generics")
+include("hw4-gc")
+include("L06-annotations")
+include("L08-gc:homework")
+include("L12-solid:homework")
+include("L15-structuralPatterns:homework")
 include("L10-byteCodes:homework")
 
 pluginManagement {
@@ -21,4 +26,6 @@ pluginManagement {
         id("com.google.protobuf") version protobufVer
         id("com.diffplug.spotless") version spotless
     }
+
 }
+
