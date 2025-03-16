@@ -26,6 +26,4 @@ replay_pid*
 /.idea/
 /hw01-gradle/build/
 /L03-generics/build/
-/L08-gc/homework/build/
-/L08-gc/build/
-**/build
+/L10-byteCodes/build/

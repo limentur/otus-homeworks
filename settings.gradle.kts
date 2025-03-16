@@ -6,9 +6,7 @@ include("L06-annotations")
 include("L08-gc:homework")
 include("L12-solid:homework")
 include("L15-structuralPatterns:homework")
-
-
-
+include("L10-byteCodes:homework")
 
 pluginManagement {
     val jgitver: String by settings
@@ -17,7 +15,6 @@ pluginManagement {
     val johnrengelmanShadow: String by settings
     val jib: String by settings
     val protobufVer: String by settings
-    val sonarlint: String by settings
     val spotless: String by settings
 
     plugins {
@@ -27,7 +24,8 @@ pluginManagement {
         id("com.github.johnrengelman.shadow") version johnrengelmanShadow
         id("com.google.cloud.tools.jib") version jib
         id("com.google.protobuf") version protobufVer
-        id("name.remal.sonarlint") version sonarlint
         id("com.diffplug.spotless") version spotless
     }
+
 }
+
