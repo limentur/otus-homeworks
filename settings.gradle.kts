@@ -8,6 +8,9 @@ include("L12-solid:homework")
 include("L15-structuralPatterns:homework")
 include("L10-byteCodes:homework")
 include("L16-io:homework")
+include("L18-jdbc:homework")
+include("L18-jdbc")
+
 
 pluginManagement {
     val jgitver: String by settings
