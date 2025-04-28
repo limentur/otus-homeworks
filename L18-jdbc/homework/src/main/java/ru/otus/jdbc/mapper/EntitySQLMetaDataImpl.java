@@ -3,21 +3,43 @@ package ru.otus.jdbc.mapper;
 import java.lang.reflect.*;
 import java.util.stream.*;
 
-public record EntitySQLMetaDataImpl(EntityClassMetaData<?> entityClassMetaData) implements EntitySQLMetaData {
+public class EntitySQLMetaDataImpl implements EntitySQLMetaData {
+    public EntityClassMetaData<?> entityClassMetaData;
+    public String select;
+    public String selectById;
+    public String insert;
+    public String update;
+
+    public EntitySQLMetaDataImpl(EntityClassMetaData<?> entityClassMetaData) {
+        this.entityClassMetaData = entityClassMetaData;
+        this.select = "SELECT "+formColumnNames()+" FROM " + entityClassMetaData.getName();
+        this.selectById = "SELECT "+formColumnNames()+" FROM " + entityClassMetaData.getName() + " WHERE " + entityClassMetaData.getIdField().getName() + " = ?";
+        this.insert = formInsertSql();
+        this.update = formUpdateSql();
+
+    }
 
     @Override
     public String getSelectAllSql() {
-        return "SELECT * FROM " + entityClassMetaData.getName();
+        return select;
     }
 
     @Override
     public String getSelectByIdSql() {
-        return "SELECT * FROM " + entityClassMetaData.getName() +
-                " WHERE " + entityClassMetaData.getIdField().getName() + " = ?";
+        return selectById;
     }
 
     @Override
     public String getInsertSql() {
+        return insert;
+    }
+
+    @Override
+    public String getUpdateSql() {
+        return update;
+    }
+
+    private String formInsertSql() {
         var fields = entityClassMetaData.getFieldsWithoutId();
 
         String columnNames = fields.stream()
@@ -32,8 +54,7 @@ public record EntitySQLMetaDataImpl(EntityClassMetaData<?> entityClassMetaData) 
                 " (" + columnNames + ") VALUES (" + placeholders + ")";
     }
 
-    @Override
-    public String getUpdateSql() {
+    public String formUpdateSql() {
         var fields = entityClassMetaData.getFieldsWithoutId();
 
         String setClause = fields.stream()
@@ -43,5 +64,11 @@ public record EntitySQLMetaDataImpl(EntityClassMetaData<?> entityClassMetaData) 
         return "UPDATE " + entityClassMetaData.getName() +
                 " SET " + setClause +
                 " WHERE " + entityClassMetaData.getIdField().getName() + " = ?";
+    }
+
+    private String formColumnNames() {
+        return entityClassMetaData.getAllFields().stream()
+                .map(Field::getName)
+                .collect(Collectors.joining(", "));
     }
 }

@@ -1,9 +1,10 @@
 package ru.otus.jdbc.mapper;
 
+import java.lang.reflect.*;
 import java.sql.*;
 import java.util.*;
 
-import ru.otus.core.repository.DataTemplate;
+import ru.otus.core.repository.*;
 import ru.otus.core.repository.executor.DbExecutor;
 
 /** Сохратяет объект в базу, читает объект из базы */
@@ -39,7 +40,8 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
                     });
                 }
                 return mappingClass;
-            } catch (Exception e) {
+            } catch (DataTemplateException | NoSuchMethodException | SQLException | InvocationTargetException |
+                     InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
         });

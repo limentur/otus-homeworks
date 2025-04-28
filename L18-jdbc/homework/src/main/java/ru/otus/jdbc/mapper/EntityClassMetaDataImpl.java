@@ -5,25 +5,25 @@ import java.util.*;
 import java.util.stream.*;
 
 public class EntityClassMetaDataImpl <T> implements EntityClassMetaData{
-
     private final Class<T> entityClass;
+    private final String simpleName;
+    private final Constructor<T> constructor;
+    private final Field idField;
+    private final List<Field> allFields;
+    private final List<Field> fieldsWithoutId;
 
-    public EntityClassMetaDataImpl(Class<T> entityClass) {
+    public EntityClassMetaDataImpl(Class<T> entityClass) throws NoSuchMethodException {
         this.entityClass = entityClass;
+        this.simpleName = entityClass.getSimpleName().toLowerCase();
+        this.constructor = entityClass.getConstructor();
+        this.allFields = List.of(entityClass.getDeclaredFields());
+        this.idField = setIdField();
+        this.fieldsWithoutId = allFields.stream()
+                .filter(f -> !f.equals(idField))
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public String getName() {
-        return entityClass.getSimpleName().toLowerCase();
-    }
-
-    @Override
-    public Constructor<T> getConstructor() throws NoSuchMethodException {
-        return entityClass.getConstructor();
-    }
-
-    @Override
-    public Field getIdField() {
+    private Field setIdField() {
         return Arrays.stream(entityClass.getDeclaredFields())
                     .filter(field -> field.isAnnotationPresent(Id.class))
                     .findFirst()
@@ -32,15 +32,27 @@ public class EntityClassMetaDataImpl <T> implements EntityClassMetaData{
     }
 
     @Override
+    public String getName() {
+        return simpleName;
+    }
+
+    @Override
+    public Constructor<T> getConstructor() {
+        return constructor;
+    }
+
+    @Override
+    public Field getIdField() {
+        return idField;
+    }
+
+    @Override
     public List<Field> getAllFields() {
-        return List.of(entityClass.getDeclaredFields());
+        return allFields;
     }
 
     @Override
     public List<Field> getFieldsWithoutId() {
-        Field idField = getIdField();
-        return Arrays.stream(entityClass.getDeclaredFields())
-                .filter(field -> !field.equals(idField))
-                .collect(Collectors.toList());
+        return fieldsWithoutId;
     }
 }
