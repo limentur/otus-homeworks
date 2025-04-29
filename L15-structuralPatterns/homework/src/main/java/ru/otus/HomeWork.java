@@ -7,6 +7,7 @@ import ru.otus.processor.LoggerProcessor;
 import ru.otus.processor.homework.ProcessorFieldSwitch;
 import ru.otus.processor.homework.ProcessorThrowExceptionEverySec;
 
+import java.time.*;
 import java.util.List;
 
 public class HomeWork {
@@ -25,7 +26,7 @@ public class HomeWork {
     */
 
     public static void main(String[] args) {
-        var processors = List.of(new ProcessorFieldSwitch(), new LoggerProcessor(new ProcessorThrowExceptionEverySec()));
+        var processors = List.of(new ProcessorFieldSwitch(), new LoggerProcessor(new ProcessorThrowExceptionEverySec(LocalDateTime::now)));
 
         var complexProcessor = new ComplexProcessor(processors, ex -> {});
         var listenerPrinter = new HistoryListener();

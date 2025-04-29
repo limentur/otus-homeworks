@@ -3,25 +3,21 @@ package ru.otus.processor.homework;
 import ru.otus.model.Message;
 import ru.otus.processor.Processor;
 
-import java.time.LocalDateTime;
+import java.time.*;
 
 public class ProcessorThrowExceptionEverySec implements Processor {
 
-        @Override
-        public Message process(Message message) throws EvenSecondException {
-            int currentSecond = getCurrentSecond();
+    private final DateTimeProvider dateTimeProvider;
 
-            if (isEvenSecond(currentSecond)) {
-                throw new EvenSecondException("Текущая секунда " + currentSecond + " является четной!");
-            }
-            return message;
-        }
+    public ProcessorThrowExceptionEverySec(DateTimeProvider dateTimeProvider) {
+        this.dateTimeProvider = dateTimeProvider;
+    }
 
-        public int getCurrentSecond() {
-            return LocalDateTime.now().getSecond();
+    @Override
+    public Message process(Message message) {
+        if (dateTimeProvider.getDate().atZone(ZoneId.systemDefault()).toEpochSecond() % 2 == 0) {
+            throw new RuntimeException(dateTimeProvider.getDate().toString());
         }
-
-        private Boolean isEvenSecond(int second){
-            return (second % 2) == 0;
-        }
+        return message;
+    }
 }

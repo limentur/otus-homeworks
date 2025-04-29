@@ -11,6 +11,7 @@ public class LoggerProcessor implements Processor {
     private final Processor processor;
 
     public LoggerProcessor(Processor processor) {
+
         this.processor = processor;
     }
 
