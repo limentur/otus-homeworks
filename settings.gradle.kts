@@ -10,6 +10,8 @@ include("L10-byteCodes:homework")
 include("L16-io:homework")
 include("L18-jdbc:homework")
 include("L18-jdbc")
+include("L22-cache")
+
 
 
 pluginManagement {
